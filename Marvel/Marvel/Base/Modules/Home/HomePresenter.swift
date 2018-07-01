@@ -2,11 +2,12 @@
 //  HomePresenter.swift
 //  Marvel
 //
-//  Created by Bruno Santos on 29/06/18.
+//  Created by Vinicius Minozzi on 29/06/18.
 //  Copyright © 2018 Vinicius Minozzi. All rights reserved.
 //
 
 import Foundation
+import UIKit
 
 enum ContentType: Int {
     case home = 0
@@ -79,5 +80,20 @@ class HomePresenter: HomePresenterProtocol {
                             thumbnail: file,
                             image: imageCache.getImage(string: file),
                             favorite: interactor.isFavorite(character: character))
+    }
+    
+    func didSelect(row: Int) -> DetailCharacterDTO {
+        guard let character = interactor.characters.element(at: row) else {
+            return DetailCharacterDTO()
+        }
+        
+        let file = character.thumbnail?.file ?? ""
+        return DetailCharacterDTO(id: character.id,
+                                  name: character.name,
+                                  description: character.description ?? "",
+                                  thumbnail: file,
+                                  series: character.series?.items ?? [Item](),
+                                  comics: character.comics?.items ?? [Item](),
+                                  image: imageCache.getImage(string: file))
     }
 }

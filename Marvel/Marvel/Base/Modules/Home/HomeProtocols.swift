@@ -2,7 +2,7 @@
 //  HomeProtocols.swift
 //  Marvel
 //
-//  Created by Bruno Santos on 29/06/18.
+//  Created by Vinicius Minozzi on 29/06/18.
 //  Copyright © 2018 Vinicius Minozzi. All rights reserved.
 //
 
@@ -39,6 +39,7 @@ protocol HomePresenterProtocol: class {
     func numberOfSections() -> Int
     func numberOfItems() -> Int 
     func getCharacterDTO(index: Int) -> CharacterDTO
+    func didSelect(row: Int) -> DetailCharacterDTO
 }
 
 protocol CharacterFavoriteDelegate: class {

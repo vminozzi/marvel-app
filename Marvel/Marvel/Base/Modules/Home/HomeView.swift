@@ -2,7 +2,7 @@
 //  HomeView.swift
 //  Marvel
 //
-//  Created by Bruno Santos on 29/06/18.
+//  Created by Vinicius Minozzi on 29/06/18.
 //  Copyright © 2018 Vinicius Minozzi. All rights reserved.
 //
 
@@ -13,6 +13,12 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     // MARK: - Attributes
     lazy var presenter: HomePresenterProtocol = HomePresenter(view: self)
     private let pullToRefresh = UIRefreshControl()
+    internal var splitDetailView: SplitViewController {
+        guard let splitViewController = splitViewController as? SplitViewController else {
+            return SplitViewController()
+        }
+        return splitViewController
+    }
     
     // MARK: - IBOutlet
     @IBOutlet weak var collectionView: UICollectionView!
@@ -99,6 +105,20 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         if let characterCell = cell as? CharacterCell {
             characterCell.fill(with: presenter.getCharacterDTO(index: indexPath.row))
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let detailData = presenter.didSelect(row: indexPath.row)
+        guard let detailView = UIStoryboard(name: "Detail", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailView else {
+            return
+        }
+        
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            splitDetailView.showDetailViewController(dto: detailData)
+        } else {
+            detailView.characterDTO = detailData
+            navigationController?.pushViewController(detailView, animated: true)
         }
     }
     

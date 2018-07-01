@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="TW2-ht-G2s">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Character-->
+        <scene sceneID="sqY-fy-xdg">
+            <objects>
+                <tableViewController storyboardIdentifier="DetailViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="lke-Gc-5zr" customClass="DetailView" customModule="Marvel" customModuleProvider="target" sceneMemberID="viewController">
+                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="grouped" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" sectionFooterHeight="18" id="wND-fh-DUs">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <color key="sectionIndexColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <prototypes>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CharacterThumbnailCell" rowHeight="248" id="W2u-Qh-pnk" customClass="CharacterThumbnailCell" customModule="Marvel" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="55.5" width="375" height="248"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="W2u-Qh-pnk" id="pDd-tb-uk4">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="248"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fur-UP-ls1">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="248"/>
+                                        </imageView>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="fur-UP-ls1" secondAttribute="bottom" id="GbI-7q-lhK"/>
+                                        <constraint firstItem="fur-UP-ls1" firstAttribute="leading" secondItem="pDd-tb-uk4" secondAttribute="leading" id="Ru0-dz-nb0"/>
+                                        <constraint firstAttribute="trailing" secondItem="fur-UP-ls1" secondAttribute="trailing" id="hKx-Pt-a9F"/>
+                                        <constraint firstItem="fur-UP-ls1" firstAttribute="top" secondItem="pDd-tb-uk4" secondAttribute="top" id="nQd-1E-fD1"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="thumbnailImageView" destination="fur-UP-ls1" id="hgB-W5-dTd"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CharacterDescriptionCell" id="faE-eY-pd7" customClass="CharacterDescriptionCell" customModule="Marvel" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="303.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="faE-eY-pd7" id="QiF-67-joP">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v3y-it-iOA">
+                                            <rect key="frame" x="16" y="12" width="343" height="18"/>
+                                            <constraints>
+                                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="18" id="bfy-hm-uEE"/>
+                                            </constraints>
+                                            <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                            <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="v3y-it-iOA" firstAttribute="trailing" secondItem="QiF-67-joP" secondAttribute="trailingMargin" id="1T0-MC-7fu"/>
+                                        <constraint firstItem="v3y-it-iOA" firstAttribute="leading" secondItem="QiF-67-joP" secondAttribute="leadingMargin" id="AaR-3Q-9fN"/>
+                                        <constraint firstItem="v3y-it-iOA" firstAttribute="top" secondItem="QiF-67-joP" secondAttribute="topMargin" constant="1" id="R0J-hb-ybr"/>
+                                        <constraint firstAttribute="bottomMargin" secondItem="v3y-it-iOA" secondAttribute="bottom" constant="3" id="csK-wp-8lP"/>
+                                    </constraints>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <connections>
+                                    <outlet property="descriptionLabel" destination="v3y-it-iOA" id="IWE-NI-nJ9"/>
+                                </connections>
+                            </tableViewCell>
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="CharacterSeriesComicsCell" id="ZSL-A4-aWz" customClass="CharacterSeriesComicsCell" customModule="Marvel" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="347.5" width="375" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="ZSL-A4-aWz" id="hQu-cc-7sZ">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </tableViewCellContentView>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            </tableViewCell>
+                        </prototypes>
+                        <connections>
+                            <outlet property="dataSource" destination="lke-Gc-5zr" id="rzN-uk-4gh"/>
+                            <outlet property="delegate" destination="lke-Gc-5zr" id="D88-xI-KL8"/>
+                        </connections>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Character" id="MdZ-2Y-gj9"/>
+                </tableViewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mgi-TO-lA0" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="757.60000000000002" y="220.83958020989508"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="rW0-q5-2w1">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="cKF-5o-zyg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController storyboardIdentifier="DetailView" useStoryboardIdentifierAsRestorationIdentifier="YES" id="TW2-ht-G2s" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" largeTitles="YES" id="GGT-rV-4c3">
+                        <rect key="frame" x="0.0" y="20" width="375" height="96"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="0.14999999999999999" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <textAttributes key="titleTextAttributes">
+                            <color key="textColor" red="0.85882352939999995" green="0.0" blue="0.066666666669999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                        <textAttributes key="largeTitleTextAttributes">
+                            <color key="textColor" red="0.85882352939999995" green="0.0" blue="0.066666666669999999" alpha="1" colorSpace="calibratedRGB"/>
+                        </textAttributes>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="lke-Gc-5zr" kind="relationship" relationship="rootViewController" id="eqb-1e-EvX"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="-194" y="221"/>
+        </scene>
+    </scenes>
+</document>

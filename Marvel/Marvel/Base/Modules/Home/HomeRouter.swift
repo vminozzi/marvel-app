@@ -2,7 +2,7 @@
 //  HomeRouter.swift
 //  Marvel
 //
-//  Created by Bruno Santos on 29/06/18.
+//  Created by Vinicius Minozzi on 29/06/18.
 //  Copyright © 2018 Vinicius Minozzi. All rights reserved.
 //
 
@@ -22,8 +22,12 @@ class HomeRouter {
         window.makeKeyAndVisible()
     }
     
-    func goToDetail() {
-        
+    func goToDetail(character data: DetailCharacterDTO) {
+        guard let detailView = UIStoryboard(name: "Detail", bundle: nil).instantiateViewController(withIdentifier: "DetailView") as? DetailView else {
+            return
+        }
+        detailView.characterDTO = data
+        window.rootViewController?.navigationController?.pushViewController(detailView, animated: true)
     }
     
     private func home() -> UIViewController {
