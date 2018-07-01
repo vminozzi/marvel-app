@@ -14,7 +14,7 @@ protocol Mappable: Decodable {
 
 protocol Requestable: class {
     associatedtype DataType
-    func request(completion: @escaping (_ result: DataType?, _ error: CustomError?) -> Void)
+    func request(completion: @escaping (_ result: DataType?, _ error: RequestError?) -> Void)
 }
 
 struct BaseAPI {

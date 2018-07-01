@@ -1,5 +1,5 @@
 //
-//  CharactersResponse.swift
+//  CharactersData.swift
 //  Marvel
 //
 //  Created by Vinicius Minozzi on 28/06/2018.
@@ -8,8 +8,8 @@
 
 import Foundation
 
-struct CharactersResponse: Mappable {
+struct CharactersData: Decodable {
     
-    init?(data: Data) {
-    }
+    var total: Int? = 0
+    var results: [Character]?
 }

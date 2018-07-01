@@ -9,7 +9,7 @@
 import UIKit
 
 extension Array {
-    func object(index: Int) -> Element? {
+    func element(at index: Int) -> Element? {
         if index >= 0 && index < self.count {
             return self[index]
         }
