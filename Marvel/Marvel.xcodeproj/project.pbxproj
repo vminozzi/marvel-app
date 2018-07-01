@@ -11,7 +11,6 @@
 		1E00E54C20E59B4E004F8CC8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00E53E20E59B4D004F8CC8 /* AppDelegate.swift */; };
 		1E00E54D20E59B4E004F8CC8 /* BaseAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00E54420E59B4E004F8CC8 /* BaseAPI.swift */; };
 		1E00E54E20E59B4E004F8CC8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1E00E54720E59B4E004F8CC8 /* LaunchScreen.storyboard */; };
-		1E00E55020E59B4E004F8CC8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1E00E54920E59B4E004F8CC8 /* Info.plist */; };
 		1E00E55120E59B4E004F8CC8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1E00E54B20E59B4E004F8CC8 /* Assets.xcassets */; };
 		1E00E55720E5A838004F8CC8 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00E55320E5A838004F8CC8 /* Array+Extension.swift */; };
 		1E00E55A20E5A838004F8CC8 /* UIViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1E00E55620E5A838004F8CC8 /* UIViewController+Extension.swift */; };
@@ -524,7 +523,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0940;
-				LastUpgradeCheck = 0930;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Vinicius Minozzi";
 				TargetAttributes = {
 					1E8E0E3120E5977C00D96BD2 = {
@@ -569,7 +568,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1E00E55020E59B4E004F8CC8 /* Info.plist in Resources */,
 				1E00E54E20E59B4E004F8CC8 /* LaunchScreen.storyboard in Resources */,
 				1E00E55120E59B4E004F8CC8 /* Assets.xcassets in Resources */,
 				A0E38DEF20E95B4A00E30BE3 /* Detail.storyboard in Resources */,
@@ -868,7 +866,9 @@
 				API_KEY = c0416d0510457cee46d6a56b7d901d13;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H6R55LXW96;
 				INFOPLIST_FILE = Marvel/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -888,7 +888,9 @@
 				API_KEY = c0416d0510457cee46d6a56b7d901d13;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H6R55LXW96;
 				INFOPLIST_FILE = Marvel/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -984,8 +986,9 @@
 				API_HASH = 6c2276f228aa83f38ab1df45616f4c38;
 				API_KEY = c0416d0510457cee46d6a56b7d901d13;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H6R55LXW96;
 				INFOPLIST_FILE = Widget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1005,8 +1008,9 @@
 				API_HASH = 6c2276f228aa83f38ab1df45616f4c38;
 				API_KEY = c0416d0510457cee46d6a56b7d901d13;
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = H6R55LXW96;
 				INFOPLIST_FILE = Widget/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.1;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

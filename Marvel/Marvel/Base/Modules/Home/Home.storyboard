@@ -61,7 +61,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="t4t-w4-iam">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="618"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="SSL-kz-rJP">
                                     <size key="itemSize" width="167" height="234"/>
@@ -138,7 +138,7 @@
                             <constraint firstItem="i0g-XU-JpI" firstAttribute="centerX" secondItem="l0K-Vg-QuB" secondAttribute="centerX" id="ClO-jd-sFd"/>
                             <constraint firstItem="t4t-w4-iam" firstAttribute="bottom" secondItem="LMa-N6-6sm" secondAttribute="bottom" id="FJZ-jI-M16"/>
                             <constraint firstItem="t4t-w4-iam" firstAttribute="trailing" secondItem="LMa-N6-6sm" secondAttribute="trailing" id="fff-AP-9WE"/>
-                            <constraint firstItem="t4t-w4-iam" firstAttribute="top" secondItem="LMa-N6-6sm" secondAttribute="top" id="frv-eM-je8"/>
+                            <constraint firstItem="t4t-w4-iam" firstAttribute="top" secondItem="l0K-Vg-QuB" secondAttribute="top" id="frv-eM-je8"/>
                             <constraint firstItem="t4t-w4-iam" firstAttribute="leading" secondItem="LMa-N6-6sm" secondAttribute="leading" id="nQX-Za-iHa"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="LMa-N6-6sm"/>

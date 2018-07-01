@@ -37,15 +37,17 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
         presenter.contentType = type
         load()
+        if presenter.contentType == .home {
+            addPullToRefresh()
+        } else {
+            collectionView.refreshControl = nil
+        }
     }
     
     // MARK: - Setup
     fileprivate func setup() {
         setupNavigationController()
         setupSearchBar()
-        if presenter.contentType == .home {
-            addPullToRefresh()
-        }
     }
     
     fileprivate func setupSearchBar() {
@@ -56,8 +58,9 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     fileprivate func setupNavigationController() {
-        navigationController?.navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationItem.largeTitleDisplayMode = .automatic
+        extendedLayoutIncludesOpaqueBars = true
     }
     
     fileprivate func addPullToRefresh() {
@@ -134,18 +137,15 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         
         if let message = error {
             DispatchQueue.main.async {
+                self.pullToRefresh.endRefreshing()
                 self.feedbackLabel.text = message
             }
             showDefaultAlert(message: message, completeBlock: nil)
-        } else {
-            if presenter.numberOfItems() == 0 {
-                feedbackLabel.text = "No results"
-                return
-            }
         }
         
         DispatchQueue.main.async {
-            self.feedbackLabel.text = ""
+            self.feedbackLabel.text = self.presenter.numberOfItems() == 0 ? "No results" : ""
+            self.pullToRefresh.endRefreshing()
             self.collectionView.reloadData()
         }
     }
