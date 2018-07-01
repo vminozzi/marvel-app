@@ -15,16 +15,80 @@
             <objects>
                 <viewController id="M4Y-Lb-cyx" customClass="TodayViewController" customModule="Widget" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" simulatedAppContext="notificationCenter" id="S3S-Oj-5AN">
-                        <rect key="frame" x="0.0" y="0.0" width="320" height="400"/>
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="euI-4Z-Twu">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="200"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="8" minimumInteritemSpacing="8" id="6QI-P9-koS">
+                                    <size key="itemSize" width="118" height="122"/>
+                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
+                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
+                                    <inset key="sectionInset" minX="8" minY="8" maxX="8" maxY="8"/>
+                                </collectionViewFlowLayout>
+                                <cells>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="CharacterWidgetCell" id="PZu-QR-ZAB" customClass="CharacterWidgetCell" customModule="Widget" customModuleProvider="target">
+                                        <rect key="frame" x="8" y="8" width="118" height="122"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="118" height="122"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="hJK-78-RmJ">
+                                                    <rect key="frame" x="0.0" y="0.0" width="118" height="122"/>
+                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" alpha="0.59999999999999998" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Hlc-V2-Ba4">
+                                                    <rect key="frame" x="0.0" y="81" width="118" height="41"/>
+                                                    <color key="backgroundColor" red="0.85882352939999995" green="0.0" blue="0.066666666669999999" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="41" id="Yh8-Zg-G4P"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="hJK-78-RmJ" firstAttribute="top" secondItem="PZu-QR-ZAB" secondAttribute="top" id="7sf-HE-dUb"/>
+                                            <constraint firstItem="Hlc-V2-Ba4" firstAttribute="leading" secondItem="hJK-78-RmJ" secondAttribute="leading" id="BNT-4s-EbM"/>
+                                            <constraint firstItem="Hlc-V2-Ba4" firstAttribute="trailing" secondItem="hJK-78-RmJ" secondAttribute="trailing" id="ELi-52-2I1"/>
+                                            <constraint firstAttribute="bottom" secondItem="Hlc-V2-Ba4" secondAttribute="bottom" id="EPh-m3-R9b"/>
+                                            <constraint firstItem="hJK-78-RmJ" firstAttribute="leading" secondItem="PZu-QR-ZAB" secondAttribute="leading" id="M7s-Mg-s6h"/>
+                                            <constraint firstAttribute="bottom" secondItem="hJK-78-RmJ" secondAttribute="bottom" id="Nxp-9E-dYS"/>
+                                            <constraint firstAttribute="trailing" secondItem="hJK-78-RmJ" secondAttribute="trailing" id="uqa-Jo-ExC"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="nameLabel" destination="Hlc-V2-Ba4" id="TIi-Qs-NNM"/>
+                                            <outlet property="thumbnailImageView" destination="hJK-78-RmJ" id="KnV-Y8-MJ1"/>
+                                        </connections>
+                                    </collectionViewCell>
+                                </cells>
+                                <connections>
+                                    <outlet property="dataSource" destination="M4Y-Lb-cyx" id="Vjf-k0-zP4"/>
+                                    <outlet property="delegate" destination="M4Y-Lb-cyx" id="G64-u0-7Ox"/>
+                                </connections>
+                            </collectionView>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="euI-4Z-Twu" firstAttribute="bottom" secondItem="ssy-KU-ocm" secondAttribute="bottom" id="FQ6-z6-PYU"/>
+                            <constraint firstItem="euI-4Z-Twu" firstAttribute="leading" secondItem="ssy-KU-ocm" secondAttribute="leading" id="Pde-aF-sw4"/>
+                            <constraint firstItem="euI-4Z-Twu" firstAttribute="trailing" secondItem="ssy-KU-ocm" secondAttribute="trailing" id="clV-9l-XyF"/>
+                            <constraint firstItem="euI-4Z-Twu" firstAttribute="top" secondItem="ssy-KU-ocm" secondAttribute="top" id="iTd-P4-ugk"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="ssy-KU-ocm"/>
                     </view>
                     <extendedEdge key="edgesForExtendedLayout"/>
                     <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
-                    <size key="freeformSize" width="320" height="400"/>
+                    <size key="freeformSize" width="320" height="200"/>
+                    <connections>
+                        <outlet property="collectionView" destination="euI-4Z-Twu" id="J8p-TF-E2D"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vXp-U4-Rya" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="137.59999999999999" y="133.13343328335833"/>
         </scene>
     </scenes>
 </document>

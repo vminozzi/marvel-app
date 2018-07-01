@@ -13,10 +13,12 @@ class CharactersRequest: Requestable {
     // MARK: - Attributes
     private let offset: Int
     private let name: String
+    private let limit: Int
     
-    init(offset: Int = 0, name: String = "") {
+    init(offset: Int = 0, name: String = "", limit: Int = 20) {
         self.offset = offset
         self.name = name
+        self.limit = limit
     }
     
     // MARK: - Request
@@ -27,6 +29,8 @@ class CharactersRequest: Requestable {
         } else {
             parameters = [URLQueryItem(name: "nameStartsWith", value: name)]
         }
+        parameters.append(URLQueryItem(name: "limit", value: "\(limit)"))
+        
         APIClient().request(type: CharactersResult.self, urlString: BaseAPI().characters, parameters: parameters) { result, error in
             completion(result?.data, error)
         }
