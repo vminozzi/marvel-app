@@ -31,14 +31,12 @@ struct RequestError {
 
 class APIClient {
     
-    let ts = "1530217670"
-    
     func request<T: Mappable>(type: T.Type, urlString: String, parameters: [URLQueryItem]? = nil, completion: @escaping (T?, RequestError?) -> Void) {
         
         var urlComponents = URLComponents(string: urlString)
         urlComponents?.queryItems = [URLQueryItem(name: "apikey", value: BaseAPI.APIKey),
                                      URLQueryItem(name: "hash", value: BaseAPI.APIHash),
-                                     URLQueryItem(name: "ts", value: ts),
+                                     URLQueryItem(name: "ts", value: "1530217670"),
                                      URLQueryItem(name: "orderBy", value: "name")]
         
         if let parameters = parameters {

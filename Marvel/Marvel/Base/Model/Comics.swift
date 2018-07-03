@@ -10,5 +10,5 @@ import Foundation
 
 struct Comics: Codable, Equatable {
     
-    var items: [Item]?
+    var items = [Item]()
 }

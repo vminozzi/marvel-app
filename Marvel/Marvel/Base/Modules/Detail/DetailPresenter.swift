@@ -13,22 +13,27 @@ class DetailPresenter: DetailPresenterProtocol {
     // MARK: - Attributes
     weak var feedbackDelegate: Feedback?
     fileprivate var numberOfsections = 2
-    var character = DetailCharacterDTO() {
+    var data = DetailCharacterDTO() {
         didSet {
-            if character.comics.count > 0 {
+            if data.character.comics?.items.count ?? 0 > 0 {
                 numberOfsections += 1
             }
             
-            if character.series.count > 0 {
+            if data.character.series?.items.count ?? 0 > 0 {
                 numberOfsections += 1
             }
         }
+    }
+    fileprivate var interactor: DetailInteractorProtocol
+    
+    init(interactor: DetailInteractorProtocol = DetailInteractor()) {
+        self.interactor = interactor
     }
     
     // MARK: - DetailPresenterProtocol
     func loadContent(character: DetailCharacterDTO) {
         numberOfsections = 2
-        self.character = character
+        self.data = character
     }
     
     func numberOfSections() -> Int {
@@ -40,22 +45,25 @@ class DetailPresenter: DetailPresenterProtocol {
     }
     
     func getThumbnailCellDTO() -> CharacterThumbnailDTO {
-        return CharacterThumbnailDTO(path: character.thumbnail, image: character.image)
+        return CharacterThumbnailDTO(path: data.character.thumbnail?.file ?? "", image: data.image)
     }
     
     func getDescriptionCellDTO() -> CharacterDescriptionDTO {
-        return CharacterDescriptionDTO(description: character.description)
+        return CharacterDescriptionDTO(description: data.character.description ?? "")
     }
     
     func getSeriesCellDTO() -> CharacterSeriesComicsDTO {
-        if character.series.count > 0 {
-            return CharacterSeriesComicsDTO(items: character.series)
+        if let series = data.character.series, series.items.count > 0 {
+            return CharacterSeriesComicsDTO(items: series.items)
         }
         return getComicsCellDTO()
     }
     
     func getComicsCellDTO() -> CharacterSeriesComicsDTO {
-        return CharacterSeriesComicsDTO(items: character.comics)
+        if let comics = data.character.comics, comics.items.count > 0 {
+            return CharacterSeriesComicsDTO(items: comics.items)
+        }
+        return CharacterSeriesComicsDTO()
     }
     
     func titleForHeaderIn(section: Int) -> String {
@@ -65,11 +73,19 @@ class DetailPresenter: DetailPresenterProtocol {
         
         switch type {
         case .series:
-            return character.series.count > 0 ? "Series" : "Comics"
+            return data.character.series?.items.count ?? 0 > 0 ? "Series" : "Comics"
         case .comics:
             return "Comics"
         default:
             return ""
         }
+    }
+    
+    func didFavoriteCharacter() {
+        interactor.didFavorite(character: data.character)
+    }
+    
+    func isFavorite() -> Bool {
+        return interactor.isFavorite(character: data.character)
     }
 }

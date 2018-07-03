@@ -11,7 +11,7 @@ import UIKit
 
 protocol HomeInteractorProtocol: class {
     var feedbackDelegate: Feedback? { get set }
-    var characters: [Character] { get }
+    var characters: [Character] { get set }
     
     func loadFavorite()
     func getCharacters()
@@ -54,4 +54,6 @@ protocol CharacterFavoriteDelegate: class {
 protocol HomeRouterProtocol: class {
     var navigationController: UINavigationController? { get }
     var splitDetailView: SplitViewController? { get }
+    
+    func load()
 }

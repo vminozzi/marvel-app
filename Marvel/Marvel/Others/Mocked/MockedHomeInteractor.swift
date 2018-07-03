@@ -1,14 +1,14 @@
 //
-//  HomeInteractor.swift
+//  MockedHomeInteractor.swift
 //  Marvel
 //
-//  Created by Vinicius Minozzi on 29/06/18.
+//  Created by Vinicius Minozzi on 03/07/2018.
 //  Copyright © 2018 Vinicius Minozzi. All rights reserved.
 //
 
 import Foundation
 
-class HomeInteractor: HomeInteractorProtocol {
+class MockedHomeInteractor: HomeInteractorProtocol {
     
     weak var feedbackDelegate: Feedback?
     var characters = [Character]()
@@ -22,36 +22,22 @@ class HomeInteractor: HomeInteractorProtocol {
     }
     
     func getCharacters() {
-        CharactersRequest(offset: characters.count).request { data, error in
-            guard let data = data, let results = data.results else {
-                self.feedbackDelegate?.feedback(error: error?.message)
-                return
-            }
-            self.characters.append(contentsOf: results)
-            self.allCharacters = self.characters
-            self.feedbackDelegate?.feedback(error: nil)
+        guard let mocked = CharactersResult(data: readJSON(name: "MockedCharactersResult") ?? Data()), let characters = mocked.data?.results else {
+            return
         }
+        self.characters = characters
     }
     
     func getCharacter(with name: String) {
-        CharactersRequest(name: name).request { data, error in
-            guard let data = data, let results = data.results else {
-                self.feedbackDelegate?.feedback(error: error?.message)
-                return
-            }
-            self.characters = results
-            self.feedbackDelegate?.feedback(error: nil)
-        }
+        
     }
     
     func cancelSearch() {
-        characters = allCharacters
-        feedbackDelegate?.feedback(error: nil)
+        
     }
     
     func refresh() {
-        characters.removeAll()
-        getCharacters()
+        
     }
     
     func getFavorites() {
@@ -87,5 +73,11 @@ class HomeInteractor: HomeInteractorProtocol {
         }
         characters = favorites
         feedbackDelegate?.feedback(error: nil)
+    }
+    
+    func readJSON(name: String) -> Data? {
+        let path = Bundle.main.path(forResource: name, ofType: "json")
+        let data = try! Data(contentsOf: URL(fileURLWithPath: path!))
+        return data
     }
 }

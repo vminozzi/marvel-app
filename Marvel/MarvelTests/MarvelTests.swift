@@ -2,7 +2,7 @@
 //  MarvelTests.swift
 //  MarvelTests
 //
-//  Created by Vinicius Minozzi on 28/06/2018.
+//  Created by Vinicius Minozzi on 03/07/2018.
 //  Copyright © 2018 Vinicius Minozzi. All rights reserved.
 //
 
@@ -11,26 +11,39 @@ import XCTest
 
 class MarvelTests: XCTestCase {
     
+    let presenter = HomePresenter(interactor: MockedHomeInteractor())
+    
     override func setUp() {
         super.setUp()
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        presenter.contentType = .home
+        presenter.load()
     }
     
-    override func tearDown() {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-        super.tearDown()
+    func testShouldValidateNumberOfSections() {
+        XCTAssertEqual(presenter.numberOfSections(), 1)
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testShouldValidateNumberOfItems() {
+        XCTAssertEqual(presenter.numberOfItems(), presenter.interactor.characters.count)
     }
     
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testShouldValidateCharacterDTO() {
+        XCTAssertEqual(presenter.getCharacterDTO(index: 0).id, 1011334)
+        XCTAssertEqual(presenter.getCharacterDTO(index: 0).name, "3-D Man")
+        XCTAssertEqual(presenter.getCharacterDTO(index: 0).thumbnail, "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg")
     }
     
+    func testShouldValidateFavoriteCharacter() {
+        presenter.didFavorite(characterId: 1011334)
+        presenter.contentType = .favorites
+        XCTAssertEqual(presenter.getCharacterDTO(index: 0).name, "3-D Man")
+        XCTAssertEqual(presenter.getCharacterDTO(index: 0).name, "3-D Man")
+        XCTAssertEqual(presenter.getCharacterDTO(index: 0).thumbnail, "http://i.annihil.us/u/prod/marvel/i/mg/c/e0/535fecbbb9784.jpg")
+    }
+    
+    func testShouldValidateUnfavoriteCharacter() {
+        presenter.contentType = .favorites
+        presenter.didFavorite(characterId: 1011334)
+        XCTAssertEqual(presenter.numberOfItems(), 0)
+    }
 }

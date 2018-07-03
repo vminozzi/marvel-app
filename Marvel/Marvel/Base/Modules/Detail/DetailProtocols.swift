@@ -17,12 +17,7 @@ enum DetailCellType: Int {
 }
 
 struct DetailCharacterDTO {
-    var id = 0
-    var name = ""
-    var description = ""
-    var thumbnail = ""
-    var series = [Item]()
-    var comics = [Item]()
+    var character = Character()
     var image: UIImage?
 }
 
@@ -47,4 +42,15 @@ protocol DetailPresenterProtocol: class {
     func getDescriptionCellDTO() -> CharacterDescriptionDTO
     func getSeriesCellDTO() -> CharacterSeriesComicsDTO
     func getComicsCellDTO() -> CharacterSeriesComicsDTO
+    func didFavoriteCharacter()
+    func isFavorite() -> Bool
+}
+
+protocol DetailInteractorProtocol: class {
+    func didFavorite(character: Character)
+    func isFavorite(character: Character) -> Bool
+}
+
+protocol DetailViewDegelgate: class {
+    func didReload()
 }

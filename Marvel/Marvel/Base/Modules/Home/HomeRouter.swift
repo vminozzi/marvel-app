@@ -17,6 +17,10 @@ class HomeRouter {
         self.view = view
     }
     
+    func reloadFavorite(characterId: Int) {
+        view?.splitDetailView?.reloadFavorite(characterId: characterId)
+    }
+    
     func showDetail(detailData: DetailCharacterDTO) {
         if UIDevice.current.userInterfaceIdiom == .pad {
             view?.splitDetailView?.showDetailViewController(dto: detailData)

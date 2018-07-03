@@ -11,6 +11,8 @@ import UIKit
 
 class DetailView: UITableViewController {
     
+    // MARK: - Attributes
+    weak var delegate: DetailViewDegelgate?
     var presenter = DetailPresenter()
     var characterDTO = DetailCharacterDTO() {
         didSet {
@@ -23,6 +25,10 @@ class DetailView: UITableViewController {
         }
     }
     
+    // MARK: - IBOutlet
+    @IBOutlet weak var favoriteButton: UIButton!
+    
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         load()
@@ -30,8 +36,10 @@ class DetailView: UITableViewController {
     
     // MARK: - Load
     func load() {
-        title = characterDTO.name
+        title = characterDTO.character.name
         presenter.loadContent(character: characterDTO)
+        favoriteButton.isEnabled = characterDTO.character.id != 0
+        favoriteButton.isSelected = presenter.isFavorite()
     }
     
     // MARK: - TableViewDelegate/DataSource
@@ -95,5 +103,18 @@ class DetailView: UITableViewController {
     
     override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return presenter.titleForHeaderIn(section: section)
+    }
+    
+    // MARK: - IBAciton
+    @IBAction func favorite(button: UIButton) {
+        button.isSelected = !button.isSelected
+        presenter.didFavoriteCharacter()
+        delegate?.didReload()
+    }
+    
+    func reloadFavorite(characterId: Int) {
+        if characterId == characterDTO.character.id {
+            favoriteButton.isSelected = !favoriteButton.isSelected
+        }
     }
 }

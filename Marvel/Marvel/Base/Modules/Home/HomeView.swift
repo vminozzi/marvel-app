@@ -83,7 +83,7 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
     }
     
-    fileprivate func load() {
+    internal func load() {
         showLoader()
         presenter.load()
     }

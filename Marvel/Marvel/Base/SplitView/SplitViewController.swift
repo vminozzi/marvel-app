@@ -9,10 +9,14 @@
 import Foundation
 import UIKit
 
-class SplitViewController: UISplitViewController, UISplitViewControllerDelegate {
+class SplitViewController: UISplitViewController, UISplitViewControllerDelegate, DetailViewDegelgate {
     
-    var detailViewController: UIViewController? {
+    var detailView: UIViewController? {
         return viewControllers.last
+    }
+    
+    var homeView: UIViewController? {
+        return viewControllers.first
     }
     
     override func viewDidLoad() {
@@ -25,9 +29,23 @@ class SplitViewController: UISplitViewController, UISplitViewControllerDelegate 
     }
     
     func showDetailViewController(dto: DetailCharacterDTO) {
-        if let navigationViewController = detailViewController as? UINavigationController, let detailViewController = navigationViewController.topViewController as? DetailView {
-            detailViewController.characterDTO = dto
+        if let navigationViewController = detailView as? UINavigationController, let detailView = navigationViewController.topViewController as? DetailView {
+            detailView.characterDTO = dto
+            detailView.delegate = self
             showDetailViewController(navigationViewController, sender: nil)
+        }
+    }
+    
+    func reloadFavorite(characterId: Int) {
+        if let navigationViewController = detailView as? UINavigationController, let detailView = navigationViewController.topViewController as? DetailView {
+            detailView.reloadFavorite(characterId: characterId)
+        }
+    }
+    
+    // MARK: - DetailViewDegelgate
+    func didReload() {
+        if let navigationViewController = homeView as? UINavigationController, let homeView = navigationViewController.topViewController as? HomeView {
+            homeView.load()
         }
     }
 }

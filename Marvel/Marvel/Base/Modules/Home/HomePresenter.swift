@@ -25,7 +25,7 @@ class HomePresenter: HomePresenterProtocol {
     fileprivate var isSearching = false
     
     // MARK: - Init
-    init(view: Feedback, interactor: HomeInteractorProtocol = HomeInteractor(), routerProtocol: HomeRouterProtocol) {
+    init(view: Feedback? = nil, interactor: HomeInteractorProtocol = HomeInteractor(), routerProtocol: HomeRouterProtocol? = nil) {
         self.interactor = interactor
         self.interactor.feedbackDelegate = view
         imageCache.feedbackDelegate = view
@@ -98,13 +98,7 @@ class HomePresenter: HomePresenterProtocol {
         }
         
         let file = character.thumbnail?.file ?? ""
-        let detail =  DetailCharacterDTO(id: character.id,
-                                         name: character.name,
-                                         description: character.description ?? "",
-                                         thumbnail: file,
-                                         series: character.series?.items ?? [Item](),
-                                         comics: character.comics?.items ?? [Item](),
-                                         image: imageCache.getImage(string: file))
+        let detail =  DetailCharacterDTO(character: character, image: imageCache.getImage(string: file))
         router?.showDetail(detailData: detail)
     }
     
@@ -113,6 +107,9 @@ class HomePresenter: HomePresenterProtocol {
     }
     
     func didFavorite(characterId: Int) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            router?.reloadFavorite(characterId: characterId)
+        }
         interactor.favorite(character: characterId, contentType: contentType)
     }
 }
