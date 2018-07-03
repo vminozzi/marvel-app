@@ -7,11 +7,13 @@
 //
 
 import Foundation
+import UIKit
 
 protocol HomeInteractorProtocol: class {
     var feedbackDelegate: Feedback? { get set }
     var characters: [Character] { get }
     
+    func loadFavorite()
     func getCharacters()
     func getCharacter(with name: String)
     func cancelSearch()
@@ -34,14 +36,22 @@ protocol HomePresenterProtocol: class {
     var contentType: ContentType { get set }
     
     func load()
+    func loadMore()
     func searchCharacter(name: String)
     func cancelSerch()
     func numberOfSections() -> Int
     func numberOfItems() -> Int 
     func getCharacterDTO(index: Int) -> CharacterDTO
-    func didSelect(row: Int) -> DetailCharacterDTO
+    func refresh()
+    func didFavorite(characterId: Int)
+    func didSelect(row: Int)
 }
 
 protocol CharacterFavoriteDelegate: class {
     func favorite(with identifier: Int)
+}
+
+protocol HomeRouterProtocol: class {
+    var navigationController: UINavigationController? { get }
+    var splitDetailView: SplitViewController? { get }
 }

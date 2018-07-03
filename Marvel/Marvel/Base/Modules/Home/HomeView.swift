@@ -8,12 +8,13 @@
 
 import UIKit
 
-class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchResultsUpdating, Feedback, CharacterFavoriteDelegate {
+class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, UISearchBarDelegate, Feedback, CharacterFavoriteDelegate, HomeRouterProtocol {
     
     // MARK: - Attributes
-    lazy var presenter: HomePresenterProtocol = HomePresenter(view: self)
+    fileprivate let search = UISearchController(searchResultsController: nil)
+    lazy var presenter: HomePresenterProtocol = HomePresenter(view: self, routerProtocol: self)
     private let pullToRefresh = UIRefreshControl()
-    internal var splitDetailView: SplitViewController {
+    var splitDetailView: SplitViewController? {
         guard let splitViewController = splitViewController as? SplitViewController else {
             return SplitViewController()
         }
@@ -37,9 +38,12 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
         presenter.contentType = type
         load()
+        
         if presenter.contentType == .home {
+            self.title = "Marvel"
             addPullToRefresh()
         } else {
+            self.title = "Favorites"
             collectionView.refreshControl = nil
         }
     }
@@ -51,9 +55,10 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     fileprivate func setupSearchBar() {
-        let search = UISearchController(searchResultsController: nil)
-        search.searchResultsUpdater = self
+        search.searchBar.delegate = self
+        search.dimsBackgroundDuringPresentation = false
         search.searchBar.tintColor = .red
+        search.hidesNavigationBarDuringPresentation = false
         navigationItem.searchController = search
     }
     
@@ -74,7 +79,7 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     
     @objc private func refresh() {
         if presenter.contentType == .home {
-            presenter.interactor.refresh()
+            presenter.refresh()
         }
     }
     
@@ -98,7 +103,7 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         }
         
         if indexPath.row == presenter.numberOfItems() - 1 && presenter.contentType == .home {
-            load()
+            presenter.loadMore()
         }
         cell.favoriteDelegate = self
         cell.fill(with: presenter.getCharacterDTO(index: indexPath.row))
@@ -112,17 +117,8 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let detailData = presenter.didSelect(row: indexPath.row)
-        guard let detailView = UIStoryboard(name: "Detail", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailView else {
-            return
-        }
-        
-        if UIDevice.current.userInterfaceIdiom == .pad {
-            splitDetailView.showDetailViewController(dto: detailData)
-        } else {
-            detailView.characterDTO = detailData
-            navigationController?.pushViewController(detailView, animated: true)
-        }
+        presenter.didSelect(row: indexPath.row)
+
     }
     
     // MARK: - UICollectionViewDelegateFlowLayout
@@ -135,26 +131,24 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
         dismissLoader()
         presenter.canLoadMore = true
         
-        if let message = error {
-            DispatchQueue.main.async {
+        DispatchQueue.main.async {
+            if let message = error {
                 self.pullToRefresh.endRefreshing()
                 self.feedbackLabel.text = message
+                self.showDefaultAlert(message: message, completeBlock: nil)
+            } else {
+                self.feedbackLabel.text = self.presenter.numberOfItems() == 0 ? "No results" : ""
             }
-            showDefaultAlert(message: message, completeBlock: nil)
-        }
-        
-        DispatchQueue.main.async {
-            self.feedbackLabel.text = self.presenter.numberOfItems() == 0 ? "No results" : ""
             self.pullToRefresh.endRefreshing()
             self.collectionView.reloadData()
         }
     }
-    
+
     func didLoadImage(identifier: String) {
+        guard let collection = self.collectionView else {
+            return
+        }
         DispatchQueue.main.async {
-            guard let collection = self.collectionView else {
-                return
-            }
             for cell in collection.visibleCells {
                 if let characterCell = cell as? CharacterCell, characterCell.identifier == identifier {
                     let image = self.presenter.imageCache.imageFromCache(identifier: identifier)
@@ -165,13 +159,14 @@ class HomeView: UIViewController, UICollectionViewDelegate, UICollectionViewData
     }
     
     // MARK: - UISearchResultsUpdating
-    func updateSearchResults(for searchController: UISearchController) {
+    
+    func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         showLoader()
-        presenter.searchCharacter(name: searchController.searchBar.text ?? "")
+        presenter.searchCharacter(name: searchText)
     }
     
     // MARK: - CharacterFavoriteDelegate
     func favorite(with identifier: Int) {
-        presenter.interactor.favorite(character: identifier, contentType: presenter.contentType)
+        presenter.didFavorite(characterId: identifier)
     }
 }

@@ -25,13 +25,9 @@ class DetailPresenter: DetailPresenterProtocol {
         }
     }
     
-    // MARK: - Init
-    init(view: Feedback) {
-        feedbackDelegate = view
-    }
-    
     // MARK: - DetailPresenterProtocol
     func loadContent(character: DetailCharacterDTO) {
+        numberOfsections = 2
         self.character = character
     }
     
@@ -52,10 +48,28 @@ class DetailPresenter: DetailPresenterProtocol {
     }
     
     func getSeriesCellDTO() -> CharacterSeriesComicsDTO {
-        return CharacterSeriesComicsDTO(items: character.series)
+        if character.series.count > 0 {
+            return CharacterSeriesComicsDTO(items: character.series)
+        }
+        return getComicsCellDTO()
     }
     
     func getComicsCellDTO() -> CharacterSeriesComicsDTO {
         return CharacterSeriesComicsDTO(items: character.comics)
+    }
+    
+    func titleForHeaderIn(section: Int) -> String {
+        guard let type = DetailCellType(rawValue: section) else {
+            return ""
+        }
+        
+        switch type {
+        case .series:
+            return character.series.count > 0 ? "Series" : "Comics"
+        case .comics:
+            return "Comics"
+        default:
+            return ""
+        }
     }
 }

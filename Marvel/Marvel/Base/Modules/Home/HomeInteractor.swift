@@ -16,8 +16,12 @@ class HomeInteractor: HomeInteractorProtocol {
     var favorites = [Character]()
     fileprivate var dataManager = UserDefaultsManager()
     
-    func getCharacters() {
+    func loadFavorite() {
         favorites = dataManager.loadCharacters() ?? [Character]()
+        feedbackDelegate?.feedback(error: nil)
+    }
+    
+    func getCharacters() {
         CharactersRequest(offset: characters.count).request { data, error in
             guard let data = data, let results = data.results else {
                 self.feedbackDelegate?.feedback(error: error?.message)
@@ -30,7 +34,6 @@ class HomeInteractor: HomeInteractorProtocol {
     }
     
     func getCharacter(with name: String) {
-        favorites = dataManager.loadCharacters() ?? [Character]()
         CharactersRequest(name: name).request { data, error in
             guard let data = data, let results = data.results else {
                 self.feedbackDelegate?.feedback(error: error?.message)
@@ -53,7 +56,6 @@ class HomeInteractor: HomeInteractorProtocol {
     
     func getFavorites() {
         characters.removeAll()
-        favorites = dataManager.loadCharacters() ?? [Character]()
         characters = favorites
         feedbackDelegate?.feedback(error: nil)
     }
@@ -66,16 +68,16 @@ class HomeInteractor: HomeInteractorProtocol {
         if let remove = favorites.filter({ $0.id == id }).first {
             dataManager.remove(character: remove)
         } else {
-            guard let character = characters.filter({ $0.id == id }).first else {
-                return
+            if let character = characters.filter({ $0.id == id }).first {
+                dataManager.save(character: character)
             }
-            dataManager.save(character: character)
         }
-        favorites = dataManager.loadCharacters() ?? [Character]()
+        
         if contentType == .favorites {
             characters = favorites
         }
-        feedbackDelegate?.feedback(error: nil)
+        
+        loadFavorite()
     }
     
     func searchFavorite(character name: String) {

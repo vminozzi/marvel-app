@@ -9,9 +9,9 @@
 import Foundation
 import UIKit
 
-class DetailView: UITableViewController, Feedback {
+class DetailView: UITableViewController {
     
-    lazy var presenter: DetailPresenterProtocol = DetailPresenter(view: self)
+    var presenter = DetailPresenter()
     var characterDTO = DetailCharacterDTO() {
         didSet {
             if UIDevice.current.userInterfaceIdiom == .pad {
@@ -89,16 +89,11 @@ class DetailView: UITableViewController, Feedback {
         case .description:
             return UITableViewAutomaticDimension
         case .comics, .series:
-            return 150.0
+            return 70
         }
     }
     
-    // MARK: - Feedback
-    func feedback(error: String?) {
-        //
-    }
-    
-    func didLoadImage(identifier: String) {
-        //
+    override func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
+        return presenter.titleForHeaderIn(section: section)
     }
 }

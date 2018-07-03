@@ -18,27 +18,37 @@ class HomePresenter: HomePresenterProtocol {
     
     // MARK: - Attributes
     var interactor: HomeInteractorProtocol
+    var router: HomeRouter?
     var imageCache = ImageCache()
     var canLoadMore = true
     var contentType: ContentType = .home
     fileprivate var isSearching = false
     
     // MARK: - Init
-    init(view: Feedback, interactor: HomeInteractorProtocol = HomeInteractor()) {
+    init(view: Feedback, interactor: HomeInteractorProtocol = HomeInteractor(), routerProtocol: HomeRouterProtocol) {
         self.interactor = interactor
         self.interactor.feedbackDelegate = view
         imageCache.feedbackDelegate = view
+        router = HomeRouter(view: routerProtocol)
     }
     
     // MARK: - HomePresenterProtocol
     func load() {
+        interactor.loadFavorite()
         if contentType == .home {
-            if canLoadMore && !isSearching {
+            if interactor.characters.isEmpty {
                 canLoadMore = false
                 interactor.getCharacters()
             }
         } else {
             interactor.getFavorites()
+        }
+    }
+    
+    func loadMore() {
+        if canLoadMore && !isSearching {
+            canLoadMore = false
+            interactor.getCharacters()
         }
     }
     
@@ -82,18 +92,27 @@ class HomePresenter: HomePresenterProtocol {
                             favorite: interactor.isFavorite(character: character))
     }
     
-    func didSelect(row: Int) -> DetailCharacterDTO {
+    func didSelect(row: Int) {
         guard let character = interactor.characters.element(at: row) else {
-            return DetailCharacterDTO()
+            return
         }
         
         let file = character.thumbnail?.file ?? ""
-        return DetailCharacterDTO(id: character.id,
-                                  name: character.name,
-                                  description: character.description ?? "",
-                                  thumbnail: file,
-                                  series: character.series?.items ?? [Item](),
-                                  comics: character.comics?.items ?? [Item](),
-                                  image: imageCache.getImage(string: file))
+        let detail =  DetailCharacterDTO(id: character.id,
+                                         name: character.name,
+                                         description: character.description ?? "",
+                                         thumbnail: file,
+                                         series: character.series?.items ?? [Item](),
+                                         comics: character.comics?.items ?? [Item](),
+                                         image: imageCache.getImage(string: file))
+        router?.showDetail(detailData: detail)
+    }
+    
+    func refresh() {
+        interactor.refresh()
+    }
+    
+    func didFavorite(characterId: Int) {
+        interactor.favorite(character: characterId, contentType: contentType)
     }
 }

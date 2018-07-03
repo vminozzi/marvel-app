@@ -2,7 +2,7 @@
 //  HomeRouter.swift
 //  Marvel
 //
-//  Created by Vinicius Minozzi on 29/06/18.
+//  Created by Vinicius on 03/07/2018.
 //  Copyright © 2018 Vinicius Minozzi. All rights reserved.
 //
 
@@ -11,30 +11,23 @@ import UIKit
 
 class HomeRouter {
     
-    var window: UIWindow
+    var view: HomeRouterProtocol?
     
-    init(window: UIWindow) {
-        self.window = window
+    init(view: HomeRouterProtocol?) {
+        self.view = view
     }
     
-    func launch() {
-        window.rootViewController = home()
-        window.makeKeyAndVisible()
-    }
-    
-    func goToDetail(character data: DetailCharacterDTO) {
-        guard let detailView = UIStoryboard(name: "Detail", bundle: nil).instantiateViewController(withIdentifier: "DetailView") as? DetailView else {
-            return
+    func showDetail(detailData: DetailCharacterDTO) {
+        if UIDevice.current.userInterfaceIdiom == .pad {
+            view?.splitDetailView?.showDetailViewController(dto: detailData)
+        } else {
+            
+            guard let detailView = UIStoryboard(name: "Detail", bundle: nil).instantiateViewController(withIdentifier: "DetailViewController") as? DetailView else {
+                return
+            }
+            
+            detailView.characterDTO = detailData
+            view?.navigationController?.pushViewController(detailView, animated: true)
         }
-        detailView.characterDTO = data
-        window.rootViewController?.navigationController?.pushViewController(detailView, animated: true)
-    }
-    
-    private func home() -> UIViewController {
-        return UIStoryboard(name: "Home", bundle: nil).instantiateViewController(withIdentifier: "TabBarViewController")
-    }
-    
-    private func detail() -> UIViewController {
-        return UIViewController()
     }
 }

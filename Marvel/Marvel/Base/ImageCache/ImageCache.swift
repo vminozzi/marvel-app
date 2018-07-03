@@ -33,16 +33,13 @@ class ImageCache {
         }
         
         let placeholder = UIImage(named: "placeholder-icon")
-        placeholder?.accessibilityIdentifier = "placeholder"
         cache.setObject(placeholder ?? UIImage(), forKey: NSString(string: imageString))
         
         if let url = URL(string: imageString) {
             URLSession.shared.dataTask(with: url, completionHandler: { data, _, _ in
                 if let data = data, let image = UIImage(data: data) {
-                    DispatchQueue.main.async {
-                        self.cache.setObject(image, forKey: NSString(string: imageString))
-                        self.feedbackDelegate?.didLoadImage(identifier: imageString)
-                    }
+                    self.cache.setObject(image, forKey: NSString(string: imageString))
+                    self.feedbackDelegate?.didLoadImage(identifier: imageString)
                 }
             }).resume()
         }

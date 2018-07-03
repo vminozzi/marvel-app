@@ -35,9 +35,7 @@ class CharacterCell: UICollectionViewCell {
     }
     
     func setImage(with image: UIImage?) {
-        DispatchQueue.main.async {
-            self.thumbnailImageView.image = image
-        }
+        thumbnailImageView.image = image
     }
     
     @IBAction func favorite(button: UIButton) {
